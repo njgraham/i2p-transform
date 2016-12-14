@@ -3,7 +3,8 @@ FROM centos
 COPY oracle-instantclient12.1-* /tmp/
 RUN yum -y install epel-release && yum -y update && yum -y install python-setuptools python-devel \
     git supervisor mysql-devel && yum -y localinstall /tmp/oracle-instantclient12.1-* && \
-    easy_install pip && easy_install -U setuptools && yum -y groupinstall 'Development Tools' && \
+    easy_install pip
+RUN easy_install setuptools==3.4.4 && yum -y groupinstall 'Development Tools' && \
     pip install airflow attrdict && pip install airflow[hive] && pip install airflow[mysql] && \
     mkdir /usr/lib/oracle/12.1/client64/network/admin -p && airflow initdb
 
